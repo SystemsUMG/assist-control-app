@@ -4,14 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.database.sqlite.SQLiteException
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.liveData
+import com.cristiangonzalez.assistcontrol.database.entities.UserEntity
 import com.cristiangonzalez.assistcontrol.databinding.ActivityLoginBinding
 import com.cristiangonzalez.assistcontrol.interfaces.LoginService
 import com.cristiangonzalez.assistcontrol.models.Login
@@ -24,7 +22,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.Response
-
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
@@ -50,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.editTextPassword.text.toString()
             //Validar credenciales
             if (isValidEmail(email) && isValidPassword(password)) {
-                logIn(email, password)
+                login(email, password)
             } else {
                 toast(R.string.login_incorrect_data)
             }
@@ -77,83 +74,54 @@ class LoginActivity : AppCompatActivity() {
 //        }
 //    }
 
-    private fun logIn(email: String, password: String) {
+    private fun login(email: String, password: String) {
         showProgressBar()
-        //Acceder a DB de forma asincrona
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-
-                login()
-                val user = userViewModel.findUser(email)
-//                if (user != null) {
-//                    if (user.password == password) {
-//                        toast(R.string.login_success)
-//                        //Ir a MainActivity
-//                        goToActivity<MainActivity> {
-//                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                        }
-//                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-//                        hideProgressBar()
-//                    } else {
-//                        toast(R.string.login_incorrect_password)
-//                        hideProgressBar()
-//                    }
-//                } else {
-//                    toast(R.string.login_incorrect_user)
-//                    hideProgressBar()
-//                }
-            } catch (e: SQLiteException) {
-                toast(R.string.error_unexpected)
-                hideProgressBar()
-            }
-        }
-    }
-
-    private fun login() {
-        val user = User("cgonzalezf@miumg.edu.gt", "admin")
+        val user = User(email, password)
         val postResponse : LiveData<Response<Login>> = liveData {
             val response = retrofitInstance.login(user)
             emit(response)
         }
 
-        postResponse.observe(this, Observer {
+        postResponse.observe(this) {
             if (it.body() != null) {
-                val login = it.body()
-                login?.message?.let { it1 -> toast(it1) }
+                storeUser(it.body()!!)
             } else {
                 try {
-                    val jObjError = it.errorBody()?.string()?.let { it1 -> JSONObject(it1) }
-                    jObjError?.getString("message")?.let { it1 -> toast(it1) }
+                    val responseError = it.errorBody()?.string()?.let { it1 -> JSONObject(it1) }
+                    responseError?.getString("message")?.let { it1 -> toast(it1) }
                 } catch (e: Exception) {
                     e.message?.let { it1 -> toast(it1) }
                 }
                 hideProgressBar()
             }
-        })
-
-
-
-//        //Consumir api asincrona
-//        CoroutineScope(Dispatchers.IO).launch {
-//            try {
-//
-//
-//
-//                val call = getRetrofit().create(DonutsAPI::class.java).getDonuts("0e91b8f1-5790-423a-868a-b249224ce1bb")
-//                val donutsResponse = call.body()
-//                runOnUiThread {
-//
-//                }
-//            } catch (e: Exception) {
-//                runOnUiThread {
-//                    showError(R.string.error_internet)
-//                }
-//            }
-//        }
+        }
     }
 
-    private fun showError(text: Int) {
-        toast(text)
+    private fun storeUser(response: Login) {
+        //Acceso a db asincrona
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val currentUser = userViewModel.getUser()
+                //Registrar usuario
+                val user: UserEntity? = response.records
+                if (user != null) {
+                    if (currentUser != null) {
+                        userViewModel.deleteUser(currentUser)
+                    }
+                    userViewModel.insertUser(user)
+                    toast(response.message + " " + user.name)
+                    //Ir a MainActivity
+                    goToActivity<MainActivity> {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    }
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                }
+                hideProgressBar()
+            } catch (e: SQLiteException) { //Excepcion campo email unique
+                toast(e.toString())
+                hideProgressBar()
+            }
+        }
     }
 
     private fun showProgressBar() {

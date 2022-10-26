@@ -7,13 +7,14 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "user_table",
-    indices = [Index(value = ["email"], unique = true)] //Email unico
+    indices = [Index(value = ["user_id"], unique = true)] //Usuario unico
 )
 //Campos de tabla
 data class UserEntity (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    @ColumnInfo(name = "email") val email: String,
-    @ColumnInfo(name = "password") val password: String,
+    @ColumnInfo(name = "user_id") val user_id: String,
+    @ColumnInfo(name = "name") val name: String,
+    @ColumnInfo(name = "type") val type: String,
     @ColumnInfo(name = "token") val token: String
 )

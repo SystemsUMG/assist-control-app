@@ -8,11 +8,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserViewModel @Inject constructor(private val userRepository: UserRepository): ViewModel() {
-    suspend fun findUser(email: String) : UserEntity? {
-        return userRepository.findUser(email)
+    suspend fun getUser() : UserEntity? {
+        return userRepository.getUser()
     }
 
     suspend fun insertUser(user: UserEntity) {
         return userRepository.insertUser(user)
+    }
+
+    suspend fun deleteUser(user: UserEntity) {
+        return userRepository.deleteUser(user)
     }
 }
