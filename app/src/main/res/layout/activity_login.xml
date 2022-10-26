@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/viewLogin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_login"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/loginProgressBar"
+            layout="@layout/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/appLogo"
+            android:layout_width="@dimen/login_logo_size"
+            android:layout_height="@dimen/login_logo_size"
+            android:layout_marginTop="@dimen/login_space_vertical_xl"
+            android:contentDescription="@string/login_logo_content_description"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/logo_umg"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/appName"
+            android:layout_width="@dimen/login_app_name_width"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/login_space_vertical"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/app_name"
+            android:textAlignment="center"
+            android:textColor="?attr/colorOnPrimary"
+            android:textSize="@dimen/login_text_xl_size"
+            app:layout_constraintTop_toBottomOf="@+id/appLogo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/login_space_vertical_xl"
+            android:layout_marginStart="@dimen/login_space_horizontal"
+            android:layout_marginEnd="@dimen/login_space_horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/appName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_edit_text_height"
+                android:hint="@string/login_email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:paddingStart="@dimen/login_edit_text_padding"
+                android:paddingEnd="@dimen/login_edit_text_padding"
+                android:textSize="@dimen/login_text_size"
+                tools:ignore="DuplicateClickableBoundsCheck" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/login_space_vertical"
+            android:layout_marginStart="@dimen/login_space_horizontal"
+            android:layout_marginEnd="@dimen/login_space_horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/textInputEmail"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:endIconMode="password_toggle"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/login_edit_text_height"
+                android:paddingStart="@dimen/login_edit_text_padding"
+                android:paddingEnd="@dimen/login_edit_text_padding"
+                android:hint="@string/login_password"
+                android:inputType="textPassword"
+                android:textSize="@dimen/login_text_size"
+                android:maxLines="1"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/login_space_vertical"
+            android:layout_marginStart="@dimen/login_space_horizontal"
+            android:layout_marginEnd="@dimen/login_space_horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/textInputPassword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonLogIn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/login_button_height"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:backgroundTint="?attr/colorPrimary"
+                android:text="@string/login_sign_in"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="?attr/colorOnPrimary"
+                android:textSize="@dimen/login_text_size"
+                android:textStyle="bold"
+                app:cornerRadius="@dimen/login_button_radius"
+                app:rippleColor="?attr/colorPrimaryVariant" />
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
