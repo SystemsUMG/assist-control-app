@@ -28,4 +28,11 @@
     <dimen name="card_padding">16dp</dimen>
     <dimen name="card_padding_s">5dp</dimen>
     <dimen name="card_text_size">6sp</dimen>
+    <!-- Courses View -->
+    <dimen name="courses_size">0dp</dimen>
+    <!-- Courses Item View -->
+    <dimen name="courses_min_height">64dp</dimen>
+    <dimen name="courses_padding">16dp</dimen>
+    <dimen name="courses_divider_height">1dp</dimen>
+    <dimen name="courses_profile_image_size">40dp</dimen>
 </resources>

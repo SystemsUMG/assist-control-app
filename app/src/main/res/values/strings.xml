@@ -37,5 +37,9 @@
     <!-- Card -->
     <string name="card_topping">Topping</string>
     <string name="card_batters">Batters</string>
-<!--    <string name="default_web_client_id">711318756114-6ra2tkju7j56l23aehe714s1lp1so09r.apps.googleusercontent.com</string>-->
+    <string name="options_menu_search">Buscar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_item_courses">Cursos</string>
+    <string name="tab_item_statistics">Estadisticas</string>
 </resources>

@@ -65,15 +65,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-//    override fun onStart() {
-//        super.onStart()
-//        val user = FirebaseAuth.getInstance().currentUser
-//        if (user != null) {
-//            startActivity(HomeActivity.getLaunchIntent(this))
-//            finish()
-//        }
-//    }
-
     private fun login(email: String, password: String) {
         showProgressBar()
         val user = User(email, password)
@@ -117,8 +108,8 @@ class LoginActivity : AppCompatActivity() {
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 }
                 hideProgressBar()
-            } catch (e: SQLiteException) { //Excepcion campo email unique
-                toast(e.toString())
+            } catch (e: SQLiteException) {
+                toast(R.string.error_unexpected)
                 hideProgressBar()
             }
         }
