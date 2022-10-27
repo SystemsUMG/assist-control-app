@@ -1,5 +1,7 @@
 package com.cristiangonzalez.assistcontrol.models
 
+import java.io.Serializable
+
 data class Course (
     var id: String,
     var student_id: String,
@@ -7,4 +9,4 @@ data class Course (
     var teacher: String,
     var schedule: String,
     var course: String
-)
+) : Serializable

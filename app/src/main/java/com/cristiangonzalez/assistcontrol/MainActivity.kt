@@ -53,9 +53,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_search -> {
-                toast("buscar")
-            }
             R.id.menu_logout -> {
                 showDialog()
             }

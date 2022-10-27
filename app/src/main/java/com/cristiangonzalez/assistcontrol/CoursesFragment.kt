@@ -1,12 +1,12 @@
 package com.cristiangonzalez.assistcontrol
 
+import android.content.Intent
 import android.database.sqlite.SQLiteException
 import android.os.Bundle
 import android.util.Log
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cristiangonzalez.assistcontrol.adapters.CoursesAdapter
 import com.cristiangonzalez.assistcontrol.databinding.FragmentCoursesBinding
 import com.cristiangonzalez.assistcontrol.interfaces.CourseService
+import com.cristiangonzalez.assistcontrol.interfaces.CoursesClickListener
 import com.cristiangonzalez.assistcontrol.models.Course
 import com.cristiangonzalez.assistcontrol.models.CourseResponse
 import com.cristiangonzalez.assistcontrol.models.User
@@ -25,9 +26,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.Response
+import java.io.Serializable
+import java.util.*
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
-class CoursesFragment : Fragment(R.layout.fragment_courses) {
+class CoursesFragment : Fragment(R.layout.fragment_courses), CoursesClickListener {
 
     private var _binding: FragmentCoursesBinding? = null
     private val binding get() = _binding!!
@@ -44,6 +48,7 @@ class CoursesFragment : Fragment(R.layout.fragment_courses) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
         _binding = FragmentCoursesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -55,8 +60,36 @@ class CoursesFragment : Fragment(R.layout.fragment_courses) {
             .getRetrofitInstance()
             .create(CourseService::class.java)
 
+        binding.loginProgressBar.progressBar.bringToFront()//Mostrar progressBar al frente
+
         getUser()
         initRecycleView()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_fragment_course, menu)
+
+        val searchView = menu.findItem(R.id.menu_search).actionView as SearchView
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?) = false
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                coursesFilter.clear() //Limpiar lista
+                if (newText.isNullOrEmpty()) {
+                    coursesFilter.addAll(courses) //Agregar todos
+                    adapter.notifyDataSetChanged()
+                } else {
+                    val search = newText.lowercase(Locale.ROOT)
+                    courses.forEach {
+                        if (it.course.lowercase(Locale.ROOT).contains(search)) coursesFilter.add(it)
+                    }
+                    adapter.notifyDataSetChanged()
+                }
+                return false
+            }
+        })
+
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onDestroyView() {
@@ -64,7 +97,14 @@ class CoursesFragment : Fragment(R.layout.fragment_courses) {
         _binding = null
     }
 
+    override fun onCoursesClickListener(data: Course) {
+        val intent = Intent(activity, RecordAttendanceActivity::class.java)
+        intent.putExtra("course", data as Serializable)
+        startActivity(intent)
+    }
+
     private fun getUser() {
+        showProgressBar()
         //Acceso a db asincrona
         CoroutineScope(Dispatchers.Main).launch {
             try {
@@ -73,10 +113,9 @@ class CoursesFragment : Fragment(R.layout.fragment_courses) {
                     currentUser = user.user_id
                     getCoursesAssigned(currentUser!!)
                 }
-//                hideProgressBar()
             } catch (e: SQLiteException) {
                 requireActivity().toast(R.string.error_unexpected)
-//                hideProgressBar()
+                hideProgressBar()
             }
         }
     }
@@ -97,9 +136,8 @@ class CoursesFragment : Fragment(R.layout.fragment_courses) {
                 } catch (e: Exception) {
                     e.message?.let { it1 -> requireActivity().toast(it1) }
                 }
-//                hideProgressBar()
+                hideProgressBar()
             }
-
         }
     }
 
@@ -111,12 +149,21 @@ class CoursesFragment : Fragment(R.layout.fragment_courses) {
         courses.addAll(coursesList)
         coursesFilter.addAll(courses)
         adapter.notifyItemInserted(coursesList.size - 1)
+        hideProgressBar()
     }
 
     private fun initRecycleView() {
-        adapter = CoursesAdapter(coursesFilter) //Enviar lista filtrada
+        adapter = CoursesAdapter(coursesFilter, this) //Enviar lista filtrada
         binding.CoursesRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.CoursesRecyclerView.adapter = adapter
+    }
+
+    private fun showProgressBar() {
+        binding.loginProgressBar.progressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() {
+        binding.loginProgressBar.progressBar.visibility = View.GONE
     }
 
 }

@@ -38,8 +38,10 @@
     <string name="card_topping">Topping</string>
     <string name="card_batters">Batters</string>
     <string name="options_menu_search">Buscar</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Tabs -->
     <string name="tab_item_courses">Cursos</string>
     <string name="tab_item_statistics">Estadisticas</string>
+    <!-- Record Attendance -->
+    <string name="topic_hint">Tema Visto</string>
+    <string name="record_attendance">Registrar Asistencia</string>
 </resources>

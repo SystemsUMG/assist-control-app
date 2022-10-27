@@ -35,8 +35,8 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        //Mostrar progressBar al frente
-        binding.loginProgressBar.progressBar.bringToFront()
+
+        binding.loginProgressBar.progressBar.bringToFront()//Mostrar progressBar al frente
 
         retrofitInstance = RetrofitInstance
             .getRetrofitInstance()

@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cristiangonzalez.assistcontrol.R
 import com.cristiangonzalez.assistcontrol.databinding.FragmentCoursesItemBinding
+import com.cristiangonzalez.assistcontrol.interfaces.CoursesClickListener
 import com.cristiangonzalez.assistcontrol.models.Course
 
-class CoursesAdapter(private val courses: List<Course>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CoursesAdapter(private val courses: List<Course>, private val coursesClickListener: CoursesClickListener):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
@@ -29,6 +30,11 @@ class CoursesAdapter(private val courses: List<Course>):RecyclerView.Adapter<Rec
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as ViewHolder).bind(courses[position])
+
+        val data = courses[position]
+        holder.itemView.setOnClickListener {
+            coursesClickListener.onCoursesClickListener(data)
+        }
     }
 
     override fun getItemCount() = courses.size

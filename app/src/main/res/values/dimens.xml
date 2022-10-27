@@ -35,4 +35,13 @@
     <dimen name="courses_padding">16dp</dimen>
     <dimen name="courses_divider_height">1dp</dimen>
     <dimen name="courses_profile_image_size">40dp</dimen>
+    <!-- Record Attendance View -->
+    <dimen name="record_app_bar_elevation">0dp</dimen>
+    <dimen name="record_text_size">20sp</dimen>
+    <dimen name="record_text_size_xl">28sp</dimen>
+    <dimen name="record_horizontal_space">32dp</dimen>
+    <dimen name="record_vertical_space">16dp</dimen>
+    <dimen name="record_vertical_space_xl">64dp</dimen>
+    <dimen name="record_vertical_space_xxl">128dp</dimen>
+    <dimen name="record_padding">16dp</dimen>
 </resources>
