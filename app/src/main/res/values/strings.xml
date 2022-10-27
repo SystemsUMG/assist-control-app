@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AssistControl</string>
+    <string name="app_name">Asistencia</string>
     <string name="sign_out_button">Cerrar Sesión</string>
     <string name="congrats_text">Bienvenido</string>
     <!-- Progress Bar -->
@@ -24,6 +24,7 @@
     <string name="login_email_unique">El correo ya está registrado</string>
     <string name="login_logo_content_description">App Logo</string>
     <string name="login_email_domain">miumg.edu.gt</string>
+    <string name="login_invalid_user">El usuario no es un estudiante</string>
     <!-- ToolBar -->
     <string name="search">Buscar</string>
     <!-- Errors -->
@@ -37,5 +38,13 @@
     <!-- Card -->
     <string name="card_topping">Topping</string>
     <string name="card_batters">Batters</string>
-<!--    <string name="default_web_client_id">711318756114-6ra2tkju7j56l23aehe714s1lp1so09r.apps.googleusercontent.com</string>-->
+    <string name="options_menu_search">Buscar</string>
+    <!-- Tabs -->
+    <string name="tab_item_courses">Cursos</string>
+    <string name="tab_item_statistics">Estadisticas</string>
+    <!-- Record Attendance -->
+    <string name="topic_hint">Tema Visto</string>
+    <string name="record_attendance">Registrar Asistencia</string>
+    <!-- Courses -->
+    <string name="statistics_empty">No tienes cursos asignados</string>
 </resources>
