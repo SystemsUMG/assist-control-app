@@ -96,16 +96,21 @@ class LoginActivity : AppCompatActivity() {
                 //Registrar usuario
                 val user: UserEntity? = response.records
                 if (user != null) {
-                    if (currentUser != null) {
-                        userViewModel.deleteUser(currentUser)
+                    if (user.type == "student") {
+                        if (currentUser != null) {
+                            userViewModel.deleteUser(currentUser)
+                        }
+                        userViewModel.insertUser(user)
+                        toast(response.message + " " + user.name)
+                        //Ir a MainActivity
+                        goToActivity<MainActivity> {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        }
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    } else {
+                        toast(R.string.login_invalid_user)
                     }
-                    userViewModel.insertUser(user)
-                    toast(response.message + " " + user.name)
-                    //Ir a MainActivity
-                    goToActivity<MainActivity> {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    }
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+
                 }
                 hideProgressBar()
             } catch (e: SQLiteException) {

@@ -70,7 +70,7 @@
             android:layout_gravity="center"
             android:padding="@dimen/courses_padding"
             android:src="@drawable/ic_arrow"
-            app:tint="?attr/colorSecondary" />
+            app:tint="?attr/colorPrimary" />
 
     </LinearLayout>
 

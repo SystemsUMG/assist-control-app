@@ -25,6 +25,7 @@
     <dimen name="card_radius">15dp</dimen>
     <dimen name="card_elevation">5dp</dimen>
     <dimen name="card_margin">15dp</dimen>
+    <dimen name="card_margin_s">8dp</dimen>
     <dimen name="card_padding">16dp</dimen>
     <dimen name="card_padding_s">5dp</dimen>
     <dimen name="card_text_size">6sp</dimen>

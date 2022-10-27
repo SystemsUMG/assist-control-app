@@ -12,4 +12,8 @@ interface CourseService {
     @POST("/api/attendances")
     @Headers("Accept: application/json")
     suspend fun recordAttendance(@Body body: RecordAttendance): Response<ResponseAttendance>
+
+    @GET("/api/percentages/{student_id}")
+    @Headers("Accept: application/json")
+    suspend fun getStatistics(@Path("student_id") type: String): Response<StatisticResponse>
 }

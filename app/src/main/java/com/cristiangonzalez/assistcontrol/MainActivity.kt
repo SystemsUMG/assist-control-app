@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     private fun getPagerAdapter(): PagerAdapter {
         val adapter = PagerAdapter(this)
         adapter.addFragment(CoursesFragment())
-        adapter.addFragment(CoursesFragment())
+        adapter.addFragment(StatisticFragment())
 
         return adapter
     }

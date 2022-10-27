@@ -142,13 +142,15 @@ class CoursesFragment : Fragment(R.layout.fragment_courses), CoursesClickListene
     }
 
     private fun setCourses(coursesList: ArrayList<Course>) {
-        Log.i("records", coursesList.toString())
         //Limpiar lista
         courses.clear()
         //Agregar elementos de response a lista
         courses.addAll(coursesList)
         coursesFilter.addAll(courses)
         adapter.notifyItemInserted(coursesList.size - 1)
+
+        binding.TextViewEmptyCourses.visibility = if(coursesFilter.size == 0)  View.VISIBLE else View.GONE
+
         hideProgressBar()
     }
 

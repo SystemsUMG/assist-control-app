@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CoursesFragment">
+    tools:context=".StatisticFragment">
 
     <include
         android:id="@+id/loginProgressBar"
@@ -19,7 +19,7 @@
         android:visibility="gone"/>
 
     <TextView
-        android:id="@+id/TextViewEmptyCourses"
+        android:id="@+id/TextViewEmptyStatistics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,7 +32,7 @@
         android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/CoursesRecyclerView"
+        android:id="@+id/StatisticsRecyclerView"
         android:layout_width="@dimen/courses_size"
         android:layout_height="@dimen/courses_size"
         android:scrollbars="vertical"
@@ -40,6 +40,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/fragment_courses_item"/>
+        tools:listitem="@layout/fragment_statistic_item"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
