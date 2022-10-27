@@ -126,7 +126,6 @@ class MainActivity : AppCompatActivity() {
                 val currentUser = userViewModel.getUser()
                 if (currentUser != null) {
                     userViewModel.deleteUser(currentUser)
-                    toast("Cerrar sesion " + currentUser.name)
                 }
             } catch (e: SQLiteException) {
                 toast(e.toString())
